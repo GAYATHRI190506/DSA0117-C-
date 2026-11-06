@@ -1,0 +1,18 @@
+PROCEDURAL VERSION
+==================
+
+Procedural SmartCard Design
+===========================
+Card Balance : Rs 100
+Fare         : Rs 30
+Journey      : ALLOWED
+
+
+OBJECT-ORIENTED VERSION
+=======================
+
+Object-Oriented SmartCard Design
+=================================
+Card Balance : Rs 100
+Fare         : Rs 30
+Journey      : ALLOWED

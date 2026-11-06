@@ -1,0 +1,27 @@
+Metro Smart-Card - Expectation vs Execution
+============================================
+
+Expected Behaviour
+------------------
+1. Inner zone fare should be Rs 10.
+2. Middle zone fare should be Rs 20.
+3. Outer zone fare should be Rs 30.
+4. Peak hours should add a 20% surcharge.
+5. Student and senior passengers should receive concession.
+6. At least Rs 50 must remain after the journey.
+7. Invalid journeys should be rejected.
+
+Actual Execution Results
+------------------------
+1. Inner zone fare       : Rs 10 - PASS
+2. Middle zone fare      : Rs 20 - PASS
+3. Outer zone fare       : Rs 30 - PASS
+4. Peak surcharge        : 20% - PASS
+5. Passenger concession  : Applied - PASS
+6. Minimum balance       : Rs 50 - PASS
+7. Invalid journey       : Rejected - PASS
+
+Overall Result
+--------------
+Expected and actual behaviour match.
+Fare logic validation: SUCCESSFUL

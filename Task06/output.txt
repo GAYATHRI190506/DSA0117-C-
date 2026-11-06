@@ -1,0 +1,16 @@
+City Metro Smart-Card Fare System
+=================================
+
+Enter zone (1-Inner, 2-Middle, 3-Outer): 3
+Enter card balance in paise: 10000
+Enter journey hour (0-23): 21
+Enter passenger type (R-Regular, S-Student, N-Senior): R
+
+Fare Details
+============
+Zone                  : Outer
+Base fare             : Rs 30
+Peak hour             : No
+Final fare            : Rs 30
+Remaining balance     : Rs 70
+Journey status        : ALLOWED

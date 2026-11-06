@@ -1,0 +1,44 @@
+TEST CASE RESULTS
+=================
+
+Test Case 1
+Zone: 1
+Balance: Rs 100
+Hour: 12
+Passenger: R
+Final Fare: Rs 10.00
+Journey Status: ALLOWED
+
+Test Case 2
+Zone: 3
+Balance: Rs 100
+Hour: 18
+Passenger: R
+Final Fare: Rs 36.00
+Journey Status: ALLOWED
+
+Test Case 3
+Zone: 3
+Balance: Rs 100
+Hour: 12
+Passenger: S
+Final Fare: Rs 15.00
+Journey Status: ALLOWED
+
+Test Case 4
+Zone: 3
+Balance: Rs 80
+Hour: 12
+Passenger: R
+Final Fare: Rs 30.00
+Remaining Balance: Rs 50.00
+Journey Status: ALLOWED
+
+Test Case 5
+Zone: 3
+Balance: Rs 70
+Hour: 12
+Passenger: R
+Final Fare: Rs 30.00
+Remaining Balance: Rs 40.00
+Journey Status: NOT ALLOWED

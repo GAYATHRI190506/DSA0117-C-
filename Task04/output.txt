@@ -1,0 +1,50 @@
+Implicit Type Conversion Demonstration
+======================================
+
+1. int to double
+int value        : 25
+double value     : 25
+
+2. double to int
+double value     : 25.75
+int value        : 25
+
+3. char to int
+char value       : A
+ASCII value      : 65
+
+4. bool to int
+bool value       : 1
+int value        : 1
+
+5. Mixed arithmetic expression
+int value        : 10
+double value     : 2.5
+a + b            : 12.5
+
+6. Character arithmetic
+character        : B
+ASCII value      : 66
+number           : 5
+character + 5    : 71
+
+7. Boolean arithmetic
+true + false     : 1
+
+8. Mixed expression
+x                : 20
+y                : 3.5
+z                : C
+x + y + z        : 90.5
+
+9. Narrowing conversion
+Original double   : 19.99
+Converted int     : 19
+
+Conversion Summary
+==================
+int -> double : automatic promotion
+double -> int : fractional part removed
+char -> int   : character converted to ASCII value
+bool -> int   : true becomes 1, false becomes 0
+Mixed types   : smaller type is promoted when required
