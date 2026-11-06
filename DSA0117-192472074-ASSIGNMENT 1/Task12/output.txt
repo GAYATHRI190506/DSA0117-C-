@@ -1,0 +1,39 @@
+METRO SMART-CARD SYSTEM - DESIGN CHALLENGE
+===========================================
+
+1. Extended Zone Fare
+----------------------
+Inner Zone : Rs 10.0
+Middle Zone : Rs 20.0
+Outer Zone : Rs 30.0
+Airport Zone : Rs 60.0
+
+2. Weekend Discount
+-------------------
+Airport weekend fare (10% discount) : Rs 54.0
+
+3. Peak Hour Fare
+-----------------
+Airport peak fare (20% surcharge) : Rs 72.0
+
+4. Weekend + Peak Rule
+----------------------
+Weekend + peak fare : Rs 54.0
+Weekend discount is applied instead of peak surcharge.
+The two rules are NOT combined.
+
+5. Monthly Pass
+---------------
+Monthly pass zones: Inner + Middle
+Inner journey  : COVERED
+Middle journey : COVERED
+Outer journey  : NOT COVERED
+Airport journey: NOT COVERED
+
+6. Design Decision
+------------------
+Decision: MODIFY THE EXISTING OOP DESIGN.
+Reason: The original design is reusable, but new zone,
+weekend discount and monthly-pass requirements need extensions.
+
+Result: DESIGN CHALLENGE SUCCESSFULLY IMPLEMENTED

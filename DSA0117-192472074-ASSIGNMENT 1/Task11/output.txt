@@ -1,0 +1,29 @@
+METRO SMART-CARD SYSTEM - FINAL RECOMMENDATION
+===============================================
+
+Recommended Design Decisions
+----------------------------
+1. Use Object-Oriented Programming (OOP).
+2. Use classes to represent SmartCard, Passenger and Journey.
+3. Use enum class for metro zones.
+4. Store money in integer paise to avoid floating-point errors.
+5. Use long long for balance and fare calculations.
+6. Keep fare calculation and validation in separate functions.
+7. Validate zone, balance and travel time before processing.
+8. Apply concessions and peak-hour rules consistently.
+9. Maintain at least Rs 50 balance after every journey.
+10. Use test cases to validate normal and boundary conditions.
+
+Complexity Recommendation
+-------------------------
+Time Complexity  : O(1) per journey
+Space Complexity : O(1) per smart card
+
+Final Recommendation
+--------------------
+The Object-Oriented design is recommended because it provides
+better encapsulation, maintainability, validation and scalability.
+The final fare system should use integer paise and long long
+for reliable monetary calculations.
+
+Result: RECOMMENDED DESIGN - OOP BASED METRO FARE SYSTEM

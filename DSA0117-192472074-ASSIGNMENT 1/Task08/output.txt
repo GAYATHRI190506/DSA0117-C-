@@ -1,0 +1,8 @@
+Metro Fare Summary
+==================
+Zone                     : Outer
+Balance                  : Rs 1000.00
+Hour                     : 8
+Peak Hour                : Yes
+Final Fare               : Rs 36.00
+Journey Status           : ALLOWED
