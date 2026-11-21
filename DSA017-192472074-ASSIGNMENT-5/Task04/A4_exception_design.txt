@@ -1,0 +1,78 @@
+
+
+TASK A4 – EXCEPTION STRATEGY DESIGN
+
+A4.1 – IDENTIFICATION OF ERRORS
+
+The following errors may occur in a hospital billing system:
+
+1. Invalid Bill Amount
+   - Occurs when the bill amount is negative.
+   - Solution: Throw InvalidBillException.
+
+2. Invalid Patient Details
+   - Occurs when the patient name is empty.
+   - Solution: Throw InvalidPatientException.
+
+3. Payment Failure
+   - Occurs when the payment amount is insufficient.
+   - Solution: Throw PaymentException.
+
+4. Insurance Limit Exceeded
+   - Occurs when the insurance claim exceeds the allowed limit.
+   - Solution: Throw InsuranceLimitException.
+
+5. Invalid Payer
+   - Occurs when an unsupported payer is selected.
+   - Solution: Throw InvalidPayerException.
+
+A4.2 – EXCEPTION HIERARCHY
+
+All custom exceptions inherit from std::exception.
+
+Exception hierarchy:
+
+std::exception
+    |
+    +-- InvalidBillException
+    +-- InvalidPatientException
+    +-- PaymentException
+    +-- InsuranceLimitException
+    +-- InvalidPayerException
+
+This allows exceptions to be handled individually or through
+a common std::exception handler.
+
+A4.3 – NOEXCEPT FUNCTIONS
+
+The noexcept keyword indicates that a function is not expected
+to throw exceptions.
+
+Example:
+double getTaxRate() noexcept;
+
+If a noexcept function allows an exception to escape, the
+program terminates.
+
+A4.4 – DESTRUCTORS AND EXCEPTIONS
+
+Destructors should not throw exceptions.
+
+Reason:
+- Destructors are called automatically during object cleanup.
+- Throwing during stack unwinding can cause program termination.
+- Therefore, destructors should perform cleanup safely.
+
+COMPLEXITY ANALYSIS
+
+- Normal function execution: O(1) for simple validation.
+- Exception handling: depends on the stack unwinding and cleanup.
+- Exception objects require additional memory.
+- Exception handling is generally intended for exceptional conditions,
+  not regular control flow.
+
+CONCLUSION
+
+A structured exception hierarchy improves reliability and makes
+errors easier to identify and handle. noexcept functions and
+non-throwing destructors help maintain safe program execution.

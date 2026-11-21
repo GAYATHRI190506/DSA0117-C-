@@ -1,0 +1,95 @@
+TASK A1 – DESIGN THE POLYMORPHIC BILL HIERARCHY
+
+1. Common Operations
+
+All hospital bill types should support the following common operations:
+
+- total() – calculates the total bill amount.
+- type() – identifies the type of hospital bill.
+- print() – displays patient and bill information.
+
+Common data includes patient name and bill-related charges.
+
+2. Abstract Base Class
+
+The abstract base class is:
+
+Bill
+
+It contains:
+- patient information
+- pure virtual function total()
+- virtual function type()
+- virtual destructor
+
+The pure virtual function total() makes Bill an abstract class.
+
+3. Derived Classes
+
+The following classes inherit from Bill:
+
+Bill
+|
+|-- OutPatientBill
+|     - consultation charge
+|     - test charges
+|
+|-- InPatientBill
+|     - number of days
+|     - charge per day
+|     - surgery charge
+|
+|-- DayCareBill
+|     - package charge
+|
+|-- EmergencyBill
+      - base charge
+      - time-based charge
+
+Each derived class overrides total() and type().
+
+4. Virtual and Pure Virtual Functions
+
+total() is declared as a pure virtual function because each bill type calculates its total differently.
+
+type() is virtual so that the correct bill type can be selected at runtime.
+
+The destructor of Bill is virtual so that deleting a derived object through a Bill pointer safely calls the derived destructor.
+
+5. Runtime Polymorphism
+
+A Bill pointer can refer to any derived bill object.
+
+Example:
+
+Bill* b = new OutPatientBill(...);
+
+When b->total() is called, the OutPatientBill implementation is selected at runtime.
+
+6. Pseudocode Idea
+
+Create different bill objects.
+Store their addresses in an array of Bill pointers.
+Traverse the array.
+For every Bill pointer:
+    Display the bill.
+    Calculate its total using total().
+    Add the total to the grand total.
+Delete all dynamically allocated bill objects.
+
+7. Alternative Switch-Based Design
+
+An alternative is to use one Bill structure containing a bill type and a switch statement.
+
+Advantages:
+- Simple for a small number of bill types.
+- Easy to understand initially.
+
+Disadvantages:
+- Adding a new bill type requires modifying the switch.
+- The design becomes harder to maintain as the number of bill types increases.
+- It does not provide the same extensibility as runtime polymorphism.
+
+Both approaches have O(n) time complexity for processing n bills.
+
+The polymorphic design is more extensible because new bill types can be added as new derived classes without changing the existing Bill interface.

@@ -1,0 +1,16 @@
+
+B1.2 – COMPARISON WITH PART A DESIGN
+
+The implementation follows the polymorphic design developed in Part A.
+
+1. Bill is an abstract base class with pure virtual total() and type() functions.
+2. OutPatientBill, InPatientBill, DayCareBill and EmergencyBill override these functions.
+3. Payer is an abstract class with the pure virtual amountCovered() function.
+4. SelfPay, Insurance and GovernmentScheme implement the payer interface.
+5. Base-class pointers are used to process different bill types at runtime.
+6. A virtual destructor is provided in both Bill and Payer to ensure safe deletion through base-class pointers.
+
+The implementation retains the original design. The main implementation detail is that vectors of base-class pointers are used to manage and process the different bill objects together.
+
+Conclusion:
+The implementation demonstrates runtime polymorphism and supports different bill and payer types through common interfaces.

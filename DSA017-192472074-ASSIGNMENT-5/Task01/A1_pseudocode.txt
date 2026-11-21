@@ -1,0 +1,45 @@
+PSEUDOCODE – CALCULATE TOTAL OF HOSPITAL BILLS
+
+BEGIN
+
+Create an array of Bill pointers.
+
+Create different bill objects:
+    Create an OutPatientBill object.
+    Create an InPatientBill object.
+    Create a DayCareBill object.
+    Create an EmergencyBill object.
+
+Store the addresses of all bill objects in the Bill pointer array.
+
+Set grandTotal = 0.
+
+FOR each Bill pointer in the array:
+
+    Call print() to display the bill details.
+
+    Call total() using the Bill pointer.
+
+    Add the returned amount to grandTotal.
+
+END FOR
+
+Display grandTotal.
+
+FOR each Bill pointer in the array:
+
+    Delete the bill object.
+
+END FOR
+
+END
+
+RESULT:
+
+The polymorphic hospital billing system was successfully designed and implemented using an abstract base class and four derived classes: OutPatientBill, InPatientBill, DayCareBill, and EmergencyBill.
+
+Runtime polymorphism was achieved using virtual functions and base-class pointers. The program successfully calculated individual bills and the grand total.
+
+Grand Total: Rs. 82700
+
+Thus, the hospital bill hierarchy was successfully implemented and executed.

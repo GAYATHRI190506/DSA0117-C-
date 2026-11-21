@@ -1,0 +1,121 @@
+
+TASK A5 – DESIGN RECOVERY AND RETHROWING
+
+A5.1 – WHERE TO CATCH
+
+A reliable hospital billing system should handle exceptions
+at suitable levels.
+
+1. Validation Layer
+   - Detects invalid bill amounts, missing patient records and
+     invalid claims.
+   - Throws suitable exceptions to the calling function.
+
+2. Billing Service Layer
+   - Catches exceptions when additional logging or auditing
+     is required.
+   - Records the error message.
+   - Uses throw; to rethrow the same exception.
+
+3. Application Layer
+   - The main function catches the rethrown exception.
+   - Displays a meaningful error message to the user.
+   - Allows the application to continue processing other bills
+     whenever it is safe to do so.
+
+Example:
+
+try
+    processClaim();
+catch (const ClaimError& e)
+    log the error;
+    throw;
+
+The throw; statement rethrows the currently handled exception
+without changing its original type.
+
+A5.2 – NO LEAKS ON ERRORS
+
+STACK UNWINDING
+
+Stack unwinding is the process of destroying local objects
+automatically when an exception leaves a function.
+
+When an exception is thrown:
+- The program searches for a matching catch handler.
+- Local objects are destroyed in reverse order of construction.
+- Destructors are called during stack unwinding.
+- Control transfers to the matching catch block.
+
+RAII – RESOURCE ACQUISITION IS INITIALIZATION
+
+RAII connects resource management with object lifetime.
+
+Examples:
+- std::string manages its own memory.
+- std::vector automatically releases allocated memory.
+- std::unique_ptr automatically deletes dynamically allocated objects.
+- std::ifstream automatically closes its file when destroyed.
+
+RAII prevents resource leaks because cleanup happens
+automatically, even when exceptions occur.
+
+PREDICT THE OUTPUT
+
+Predicted output:
+
+~f ~main caught 42
+
+EXPLANATION
+
+1. Guard g is created inside function f().
+2. The statement throw 42 throws an integer exception.
+3. During stack unwinding, Guard g is destroyed first.
+4. Control returns to main() while searching for a handler.
+5. Guard m is destroyed before entering the catch handler.
+6. The catch(int x) handler catches the value 42.
+7. The message "caught 42" is printed.
+8. "not printed" does not appear because the exception
+   transfers control away from that statement.
+
+DESTRUCTOR ORDER
+
+~f
+~main
+
+ALTERNATIVE CONCEPT – MANUAL DELETE
+
+Without RAII, dynamically allocated resources would need
+manual delete statements in every possible error-handling path.
+
+Example:
+
+int* data = new int[100];
+
+try
+    processData();
+catch (...)
+    delete[] data;
+    throw;
+
+delete[] data;
+
+This approach requires careful cleanup in every catch block.
+If a new error path is added and cleanup is missed, a memory
+leak can occur.
+
+COMPLEXITY ANALYSIS
+
+- Normal processing time: O(1) for simple resource cleanup.
+- Exception handling time: depends on stack unwinding and
+  the number of objects being destroyed.
+- RAII and manual deletion both have O(1) cleanup per resource.
+- RAII reduces repeated cleanup code.
+- Manual deletion increases the number of possible leak points
+  whenever new error paths are introduced.
+
+CONCLUSION
+
+A catch-and-rethrow design separates logging from final error
+reporting. Stack unwinding and RAII ensure that local resources
+are released safely when exceptions occur.

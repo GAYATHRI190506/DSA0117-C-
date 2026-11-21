@@ -1,0 +1,60 @@
+TASK A3 – DESIGN WITH ABSTRACT CLASSES
+
+A3.1 – PAYER INTERFACE
+
+A Payer is an abstract base class used to calculate the amount covered by different payment methods.
+
+1. Payer (Abstract Class)
+   - Contains a pure virtual function:
+     virtual double amountCovered(const Bill& bill) const = 0;
+   - Provides a common interface for all payer types.
+   - Cannot be instantiated directly.
+
+2. SelfPay
+   - Represents a patient who pays the complete bill.
+   - amountCovered() returns the full bill amount.
+
+3. Insurance
+   - Contains a maximum cover limit and co-payment percentage.
+   - Calculates the eligible amount within the cover limit.
+   - Deducts the patient's co-payment percentage.
+   - Returns the amount paid by insurance.
+
+4. GovernmentScheme
+   - Uses fixed package rates for different bill types.
+   - Returns the applicable package amount, limited to the bill total.
+
+A3.2 – EXTENSION
+
+A new payer such as CorporateTieUp can be added by inheriting from Payer and implementing amountCovered().
+
+No changes are required in Payer, SelfPay, Insurance or GovernmentScheme.
+
+This demonstrates extensibility through runtime polymorphism.
+
+COMPLEXITY ANALYSIS
+
+- Virtual function call: O(1).
+- Function pointer or std::function call: O(1).
+- Payer objects store their own data, such as cover limits and co-payment percentages.
+- An abstract class provides a structured way to combine payer-specific data and behavior.
+- Function pointers or std::function can represent alternative payment policies, but associated data must be stored separately or captured.
+
+CONCLUSION
+
+The abstract Payer interface provides a flexible and extensible payment system. New payer types can be introduced without modifying existing payer classes.
+RESULT:
+
+The Payer abstract class was implemented using a pure virtual
+function amountCovered().
+
+SelfPay, Insurance and GovernmentScheme were implemented as
+derived classes.
+
+CorporateTieUp was added as a new payer without modifying
+the existing classes.
+
+The program executed successfully and demonstrated runtime
+polymorphism.
+
+All expected coverage amounts were displayed correctly.

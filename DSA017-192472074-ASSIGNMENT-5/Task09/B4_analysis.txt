@@ -1,0 +1,103 @@
+
+B4 - HOSPITAL BILLING SYSTEM EXTENSION AND PRODUCTION DECISION
+
+1. OBJECTIVE
+
+The objective is to extend the existing hospital billing system
+without modifying existing bill and payer classes.
+
+The proposed system supports 15 hospitals, two additional bill
+types, three additional payers each year, and approximately
+200,000 bills per day.
+
+2. EXTENDING THE BILLING SYSTEM
+
+Two new bill types were added:
+- SurgeryBill
+- LaboratoryBill
+
+A new payer was added:
+- SeniorCitizenScheme
+
+The new classes inherit from the existing abstract base classes.
+Runtime polymorphism allows the system to process old and new
+types through base-class pointers.
+
+3. BACKWARD COMPATIBILITY
+
+The backward compatibility program tests:
+- OutPatient
+- InPatient
+- DayCare
+- Emergency
+- SurgeryBill
+- LaboratoryBill
+
+It also checks the existing payers and the new payer.
+
+The original bill types continue to work after extension.
+
+4. EXCEPTION SAFETY
+
+The exception safety program tests:
+- Valid billing amount
+- Negative billing amount
+- Bill exceeding approval limit
+
+BillingError is derived from std::exception.
+
+std::unique_ptr automatically releases dynamically allocated
+objects, including when an exception is thrown.
+
+The virtual destructor ensures safe destruction through base
+class pointers.
+
+5. PRODUCTION SCALE
+
+The system is designed for:
+- 15 hospitals
+- 200,000 bills per day
+- Two new bill types
+- Three new payer types each year
+
+For this scale, testing should include concurrent requests,
+database transactions, logging, monitoring, and load testing.
+
+The example programs demonstrate extensibility and exception
+safety. They are not a complete production deployment.
+
+6. C++ CLASSES VS CONFIGURATION PLUG-INS
+
+C++ class-based design:
+- Strong compile-time type checking
+- Clear interfaces
+- Suitable for complex billing logic
+- New classes generally require code changes and rebuilding
+
+Configuration-based plug-in rules:
+- Rates and simple coverage rules can be changed through
+  configuration
+- Less development effort for frequent policy changes
+- Requires validation, versioning, and access control
+- Complex rules may become difficult to maintain
+
+7. PRODUCTION DECISION
+
+A hybrid design is recommended.
+
+Use C++ classes for bill types and complex business operations.
+Use validated configuration for payer coverage percentages and
+simple hospital-specific policies.
+
+Use database transactions, structured logging, automated tests,
+and monitoring for production reliability.
+
+8. CONCLUSION
+
+Runtime polymorphism makes the billing system extensible.
+New bill and payer types can be introduced without changing
+existing class implementations.
+
+Smart pointers and exception handling improve resource safety.
+A hybrid class-based and configuration-based architecture is
+appropriate for a multi-hospital billing application.

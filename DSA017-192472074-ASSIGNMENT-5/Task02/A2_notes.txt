@@ -1,0 +1,129 @@
+TASK A2 – UNDERSTAND RUNTIME BINDING
+
+A2.1 – EARLY BINDING AND LATE BINDING
+
+Early Binding:
+Early binding is the process of selecting a function during compile time.
+It is commonly used with non-virtual functions.
+The function call is resolved based on the declared type of the object or pointer.
+
+Late Binding:
+Late binding is the process of selecting a function during runtime.
+It is achieved using virtual functions in C++.
+When a base-class pointer refers to a derived-class object, the overridden function of the derived class is called.
+
+Example:
+Bill* b = new OutPatientBill(...);
+b->total();
+
+Here, total() is virtual, so the OutPatientBill implementation is selected at runtime.
+This is called runtime polymorphism.
+A2.2 – THE VIRTUAL TABLE
+
+A vtable is a compiler-generated table used to support runtime polymorphism.
+It stores addresses of virtual functions.
+
+Conceptual vtable structure:
+
+1. Bill Vtable
+   total() -> Pure virtual function
+   type()  -> Bill::type()
+   destructor -> Bill::~Bill()
+
+2. OutPatientBill Vtable
+   total() -> OutPatientBill::total()
+   type()  -> OutPatientBill::type()
+   destructor -> OutPatientBill::~OutPatientBill()
+
+3. InPatientBill Vtable
+   total() -> InPatientBill::total()
+   type()  -> InPatientBill::type()
+   destructor -> InPatientBill::~InPatientBill()
+
+Runtime Function Call:
+
+Bill* b = new OutPatientBill(...);
+
+When b->total() is executed:
+1. The pointer refers to an OutPatientBill object.
+2. The runtime mechanism identifies its derived-class virtual function.
+3. OutPatientBill::total() is executed.
+4. The calculated bill amount is returned.
+A2.3 – VIRTUAL DESTRUCTORS
+
+A virtual destructor ensures that the derived-class destructor is called when a derived object is deleted through a base-class pointer.
+
+Example:
+Bill* b = new OutPatientBill(...);
+delete b;
+
+If the base-class destructor is virtual:
+1. OutPatientBill destructor is called.
+2. Bill destructor is called.
+
+If the base-class destructor is not virtual, deleting a derived object through a base-class pointer causes undefined behavior.
+
+Therefore, a base class designed for polymorphic use should have a virtual destructor.
+ALTERNATIVE CONCEPT AND COMPLEXITY ANALYSIS
+
+If total() were not virtual, the program could identify the bill type using dynamic_cast and call the corresponding derived-class function.
+
+Time Complexity:
+- Virtual function call: O(1) per bill.
+- dynamic_cast approach: Up to k type checks for k bill types.
+- Processing n bills using virtual functions: O(n).
+
+Space Complexity:
+- A vtable pointer is generally stored in each polymorphic object.
+- The vtable stores virtual function addresses.
+- This introduces a small memory overhead.
+
+CONCLUSION:
+
+Runtime polymorphism provides a clean and extensible way to process different hospital bill types. Virtual destructors also ensure safe cleanup of derived objects.
+A2.4 – EXPERIMENT WITHOUT VIRTUAL DESTRUCTOR
+
+Compiler Warning:
+Deleting an object of abstract class type 'Bill' which has a non-virtual destructor will cause undefined behavior.
+
+Actual Output:
+500 ~Bill
+
+Observation:
+The derived destructor ~OPBill was not called in this execution.
+Only the base destructor ~Bill appeared.
+
+Conclusion:
+A polymorphic base class must have a virtual destructor to ensure proper destruction of derived objects through base-class pointers. Without it, the behavior is undefined.
+A2.5 – ADDRESSSANITIZER VERIFICATION
+
+Command:
+g++ -std=c++17 -fsanitize=address -g A2_virtual_destructor.cpp -o A2_asan.exe
+
+Result:
+AddressSanitizer compilation was unsuccessful.
+
+Error:
+ld.exe: cannot find -lasan
+
+Reason:
+The installed MinGW toolchain does not contain the required AddressSanitizer library.
+
+Conclusion:
+AddressSanitizer verification could not be performed using the current compiler environment. The compiler warning and observed output demonstrate the risk of using a non-virtual destructor.
+A2.5 – ADDRESSSANITIZER VERIFICATION
+
+Command:
+g++ -std=c++17 -fsanitize=address -g A2_virtual_destructor.cpp -o A2_asan.exe
+
+Result:
+AddressSanitizer compilation was unsuccessful.
+
+Error:
+ld.exe: cannot find -lasan
+
+Reason:
+The installed MinGW toolchain does not contain the required AddressSanitizer library.
+
+Conclusion:
+AddressSanitizer verification could not be performed using the current compiler environment. The compiler warning and observed output demonstrate the risk of using a non-virtual destructor.

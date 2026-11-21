@@ -1,0 +1,239 @@
+
+ASSIGNMENT 5 – TASK B2
+ENGINEER ERROR CONDITIONS
+Total Marks: 5
+
+--------------------------------------------------
+B2.1 – ERROR TESTING
+--------------------------------------------------
+
+1. Negative Charge
+
+Input: -500
+
+The system throws std::invalid_argument with the
+message "negative charge".
+
+This prevents negative billing amounts from being
+accepted by the hospital billing system.
+
+2. Claim Above Insurance Cover
+
+Input:
+Billed amount = 60000
+Insurance cover = 50000
+
+The system throws an exception because the claim
+exceeds the permitted insurance cover.
+
+This prevents claims from exceeding the allowed limit.
+
+3. Unknown Package Code
+
+Input: 999
+
+The system throws an exception with the message
+"unknown package code".
+
+This prevents unsupported package codes from
+being accepted.
+
+4. Invalid Numeric Input
+
+Input: "abc"
+
+std::stod() throws std::invalid_argument because
+the input text cannot be converted into a number.
+
+The exception is caught and reported safely.
+
+5. Memory Allocation Failure
+
+The program requests an impossibly large memory
+allocation.
+
+The allocation throws std::bad_alloc or its derived
+std::bad_array_new_length exception.
+
+The program catches the exception and continues.
+
+RESOURCE CLEANUP:
+
+ResourceTracker prints creation and destruction
+messages.
+
+When an exception occurs, stack unwinding destroys
+the local ResourceTracker object automatically.
+
+The catch handlers prevent individual test failures
+from terminating the complete program.
+
+--------------------------------------------------
+B2.2 – PREDICT THE OUTPUT
+--------------------------------------------------
+
+My predicted output:
+
+ok done caught negative [log too large] caught too large
+
+ACTUAL OUTPUT:
+
+ok done caught negative [log too large] caught too large
+
+EXPLANATION:
+
+First input: 100.0
+
+The amount is valid.
+validate() prints "ok".
+process() returns normally.
+main() prints "done".
+
+Second input: -5.0
+
+validate() throws std::invalid_argument.
+process() catches only std::out_of_range.
+Therefore, the exception reaches main().
+main() catches it and prints "caught negative".
+
+Third input: 2e6
+
+The amount exceeds 1e6.
+validate() throws std::out_of_range.
+process() catches the exception and prints
+"[log too large]".
+The throw; statement rethrows the same exception.
+main() catches it and prints "caught too large".
+
+Only the out_of_range exception is logged inside
+process() because its catch block handles only
+std::out_of_range.
+
+--------------------------------------------------
+B2.3 – COMPLETE THE CODE
+--------------------------------------------------
+
+The ClaimError class is derived from std::runtime_error.
+
+The approve() function performs two validations:
+
+1. If billed or cover is negative, it throws
+   std::invalid_argument("negative amount").
+
+2. If billed is greater than cover, it throws
+   ClaimError("exceeds cover").
+
+Otherwise, it returns the approved billed amount.
+
+The settle() function catches ClaimError, prints
+an audit message and rethrows the same exception.
+
+EXPECTED AND ACTUAL OUTPUT:
+
+approved 40000
+audit: exceeds cover
+claim rejected: exceeds cover
+error: negative amount
+
+THROW; VS THROW E:
+
+throw; rethrows the currently handled exception
+without creating a new exception object.
+
+throw e; creates a new exception object using the
+static type of the expression e.
+
+If e has a base-class type, derived-class information
+can be lost through object slicing.
+
+In this program, e is a ClaimError reference.
+Therefore, throw e; still throws ClaimError, but
+creates a new exception object.
+
+--------------------------------------------------
+ALTERNATIVE: OPTIONAL VS EXCEPTIONS
+--------------------------------------------------
+
+Using std::optional<double>:
+
+A valid claim returns a value containing the approved
+amount.
+
+An invalid claim returns std::nullopt.
+
+The caller checks whether a value is available before
+using the result.
+
+ANALYSIS FOR 1,000,000 CLAIMS:
+
+Invalid percentage: 0%
+
+Valid claims: 1,000,000
+Invalid claims: 0
+
+Optional:
+All claims return a value.
+No exception is thrown.
+
+Exceptions:
+All claims complete without throwing.
+The normal execution path is used.
+
+Invalid percentage: 1%
+
+Valid claims: 990,000
+Invalid claims: 10,000
+
+Optional:
+10,000 claims return std::nullopt.
+The caller checks each result.
+
+Exceptions:
+10,000 exceptions are thrown and caught.
+Exception handling adds overhead.
+
+Invalid percentage: 50%
+
+Valid claims: 500,000
+Invalid claims: 500,000
+
+Optional:
+500,000 claims return std::nullopt.
+The caller checks each result.
+
+Exceptions:
+500,000 exceptions are thrown and caught.
+Frequent exception handling can significantly
+increase execution time.
+
+TIME COMPLEXITY:
+
+Both approaches have O(n) time complexity for
+processing n claims.
+
+Optional uses ordinary result checking.
+
+Exceptions are generally suitable for unusual failures.
+Frequent throwing and catching can be expensive.
+
+SPACE COMPLEXITY:
+
+If all results are stored, both approaches use O(n)
+total space.
+
+std::optional<double> stores a double value or an
+empty state, with additional representation overhead.
+
+Exception handling uses runtime exception-management
+storage when exceptions are thrown.
+
+CONCLUSION:
+
+std::optional is suitable when claim rejection is
+an expected and frequent result.
+
+Exceptions are suitable for unexpected failures such
+as invalid system states and resource allocation errors.
+
+Actual performance depends on compiler, hardware
+and implementation.
